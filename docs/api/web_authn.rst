@@ -30,6 +30,11 @@ arguments to other commands.
       :undoc-members:
       :exclude-members: from_json, to_json
 
+.. autoclass:: Ctap2Version
+      :members:
+      :undoc-members:
+      :exclude-members: from_json, to_json
+
 .. autoclass:: AuthenticatorTransport
       :members:
       :undoc-members:
@@ -67,13 +72,33 @@ to. For more information, see
 
 .. autofunction:: enable
 
+.. autofunction:: get_credential
+
 .. autofunction:: get_credentials
 
+.. autofunction:: remove_credential
+
 .. autofunction:: remove_virtual_authenticator
+
+.. autofunction:: set_automatic_presence_simulation
+
+.. autofunction:: set_response_override_bits
 
 .. autofunction:: set_user_verified
 
 Events
 ------
 
-*There are no events in this module.*
+Generally, you do not need to instantiate CDP events
+yourself. Instead, the API creates events for you and then
+you use the event's attributes.
+
+.. autoclass:: CredentialAdded
+      :members:
+      :undoc-members:
+      :exclude-members: from_json, to_json
+
+.. autoclass:: CredentialAsserted
+      :members:
+      :undoc-members:
+      :exclude-members: from_json, to_json

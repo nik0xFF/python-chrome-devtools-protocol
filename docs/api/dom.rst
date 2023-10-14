@@ -6,8 +6,8 @@ that has an `id`. This `id` can be used to get additional information on the Nod
 the JavaScript object wrapper, etc. It is important that client receives DOM events only for the
 nodes that are known to the client. Backend keeps track of the nodes that were sent to the client
 and never sends the same node twice. It is client's responsibility to collect information about
-the nodes that were sent to the client.<p>Note that `iframe` owner elements will return
-corresponding document elements as their child nodes.</p>
+the nodes that were sent to the client. Note that `iframe` owner elements will return
+corresponding document elements as their child nodes.
 
 .. module:: cdp.dom
 
@@ -48,6 +48,21 @@ arguments to other commands.
       :undoc-members:
       :exclude-members: from_json, to_json
 
+.. autoclass:: CompatibilityMode
+      :members:
+      :undoc-members:
+      :exclude-members: from_json, to_json
+
+.. autoclass:: PhysicalAxes
+      :members:
+      :undoc-members:
+      :exclude-members: from_json, to_json
+
+.. autoclass:: LogicalAxes
+      :members:
+      :undoc-members:
+      :exclude-members: from_json, to_json
+
 .. autoclass:: Node
       :members:
       :undoc-members:
@@ -74,6 +89,11 @@ arguments to other commands.
       :exclude-members: from_json, to_json
 
 .. autoclass:: Rect
+      :members:
+      :undoc-members:
+      :exclude-members: from_json, to_json
+
+.. autoclass:: CSSComputedStyleProperty
       :members:
       :undoc-members:
       :exclude-members: from_json, to_json
@@ -108,6 +128,8 @@ to. For more information, see
 
 .. autofunction:: get_box_model
 
+.. autofunction:: get_container_for_node
+
 .. autofunction:: get_content_quads
 
 .. autofunction:: get_document
@@ -120,11 +142,19 @@ to. For more information, see
 
 .. autofunction:: get_node_for_location
 
+.. autofunction:: get_node_stack_traces
+
+.. autofunction:: get_nodes_for_subtree_by_style
+
 .. autofunction:: get_outer_html
+
+.. autofunction:: get_querying_descendants_for_container
 
 .. autofunction:: get_relayout_boundary
 
 .. autofunction:: get_search_results
+
+.. autofunction:: get_top_layer_elements
 
 .. autofunction:: hide_highlight
 
@@ -158,6 +188,8 @@ to. For more information, see
 
 .. autofunction:: resolve_node
 
+.. autofunction:: scroll_into_view_if_needed
+
 .. autofunction:: set_attribute_value
 
 .. autofunction:: set_attributes_as_text
@@ -167,6 +199,8 @@ to. For more information, see
 .. autofunction:: set_inspected_node
 
 .. autofunction:: set_node_name
+
+.. autofunction:: set_node_stack_traces_enabled
 
 .. autofunction:: set_node_value
 
@@ -227,6 +261,11 @@ you use the event's attributes.
       :exclude-members: from_json, to_json
 
 .. autoclass:: PseudoElementAdded
+      :members:
+      :undoc-members:
+      :exclude-members: from_json, to_json
+
+.. autoclass:: TopLayerElementsUpdated
       :members:
       :undoc-members:
       :exclude-members: from_json, to_json

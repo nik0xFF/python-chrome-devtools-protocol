@@ -13,6 +13,7 @@ import typing
 
 from . import dom
 from . import runtime
+from  deprecation import deprecated
 
 
 class DOMBreakpointType(enum.Enum):
@@ -28,6 +29,21 @@ class DOMBreakpointType(enum.Enum):
 
     @classmethod
     def from_json(cls, json: str) -> DOMBreakpointType:
+        return cls(json)
+
+
+class CSPViolationType(enum.Enum):
+    '''
+    CSP Violation type.
+    '''
+    TRUSTEDTYPE_SINK_VIOLATION = "trustedtype-sink-violation"
+    TRUSTEDTYPE_POLICY_VIOLATION = "trustedtype-policy-violation"
+
+    def to_json(self) -> str:
+        return self.value
+
+    @classmethod
+    def from_json(cls, json: str) -> CSPViolationType:
         return cls(json)
 
 
@@ -167,11 +183,14 @@ def remove_event_listener_breakpoint(
     json = yield cmd_dict
 
 
+@deprecated(current_version="1.3")
 def remove_instrumentation_breakpoint(
         event_name: str
     ) -> typing.Generator[T_JSON_DICT,T_JSON_DICT,None]:
     '''
     Removes breakpoint on particular native event.
+
+    .. deprecated:: 1.3
 
     **EXPERIMENTAL**
 
@@ -198,6 +217,25 @@ def remove_xhr_breakpoint(
     params['url'] = url
     cmd_dict: T_JSON_DICT = {
         'method': 'DOMDebugger.removeXHRBreakpoint',
+        'params': params,
+    }
+    json = yield cmd_dict
+
+
+def set_break_on_csp_violation(
+        violation_types: typing.List[CSPViolationType]
+    ) -> typing.Generator[T_JSON_DICT,T_JSON_DICT,None]:
+    '''
+    Sets breakpoint on particular CSP violations.
+
+    **EXPERIMENTAL**
+
+    :param violation_types: CSP Violations to stop upon.
+    '''
+    params: T_JSON_DICT = dict()
+    params['violationTypes'] = [i.to_json() for i in violation_types]
+    cmd_dict: T_JSON_DICT = {
+        'method': 'DOMDebugger.setBreakOnCSPViolation',
         'params': params,
     }
     json = yield cmd_dict
@@ -244,11 +282,14 @@ def set_event_listener_breakpoint(
     json = yield cmd_dict
 
 
+@deprecated(current_version="1.3")
 def set_instrumentation_breakpoint(
         event_name: str
     ) -> typing.Generator[T_JSON_DICT,T_JSON_DICT,None]:
     '''
     Sets breakpoint on particular native event.
+
+    .. deprecated:: 1.3
 
     **EXPERIMENTAL**
 

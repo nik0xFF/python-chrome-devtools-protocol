@@ -44,12 +44,22 @@ arguments to other commands.
       :undoc-members:
       :exclude-members: from_json, to_json
 
+.. autoclass:: InheritedPseudoElementMatches
+      :members:
+      :undoc-members:
+      :exclude-members: from_json, to_json
+
 .. autoclass:: RuleMatch
       :members:
       :undoc-members:
       :exclude-members: from_json, to_json
 
 .. autoclass:: Value
+      :members:
+      :undoc-members:
+      :exclude-members: from_json, to_json
+
+.. autoclass:: Specificity
       :members:
       :undoc-members:
       :exclude-members: from_json, to_json
@@ -65,6 +75,11 @@ arguments to other commands.
       :exclude-members: from_json, to_json
 
 .. autoclass:: CSSRule
+      :members:
+      :undoc-members:
+      :exclude-members: from_json, to_json
+
+.. autoclass:: CSSRuleType
       :members:
       :undoc-members:
       :exclude-members: from_json, to_json
@@ -114,7 +129,37 @@ arguments to other commands.
       :undoc-members:
       :exclude-members: from_json, to_json
 
+.. autoclass:: CSSContainerQuery
+      :members:
+      :undoc-members:
+      :exclude-members: from_json, to_json
+
+.. autoclass:: CSSSupports
+      :members:
+      :undoc-members:
+      :exclude-members: from_json, to_json
+
+.. autoclass:: CSSScope
+      :members:
+      :undoc-members:
+      :exclude-members: from_json, to_json
+
+.. autoclass:: CSSLayer
+      :members:
+      :undoc-members:
+      :exclude-members: from_json, to_json
+
+.. autoclass:: CSSLayerData
+      :members:
+      :undoc-members:
+      :exclude-members: from_json, to_json
+
 .. autoclass:: PlatformFontUsage
+      :members:
+      :undoc-members:
+      :exclude-members: from_json, to_json
+
+.. autoclass:: FontVariationAxis
       :members:
       :undoc-members:
       :exclude-members: from_json, to_json
@@ -124,7 +169,27 @@ arguments to other commands.
       :undoc-members:
       :exclude-members: from_json, to_json
 
+.. autoclass:: CSSTryRule
+      :members:
+      :undoc-members:
+      :exclude-members: from_json, to_json
+
+.. autoclass:: CSSPositionFallbackRule
+      :members:
+      :undoc-members:
+      :exclude-members: from_json, to_json
+
 .. autoclass:: CSSKeyframesRule
+      :members:
+      :undoc-members:
+      :exclude-members: from_json, to_json
+
+.. autoclass:: CSSPropertyRegistration
+      :members:
+      :undoc-members:
+      :exclude-members: from_json, to_json
+
+.. autoclass:: CSSPropertyRule
       :members:
       :undoc-members:
       :exclude-members: from_json, to_json
@@ -169,6 +234,8 @@ to. For more information, see
 
 .. autofunction:: get_inline_styles_for_node
 
+.. autofunction:: get_layers_for_node
+
 .. autofunction:: get_matched_styles_for_node
 
 .. autofunction:: get_media_queries
@@ -177,23 +244,37 @@ to. For more information, see
 
 .. autofunction:: get_style_sheet_text
 
+.. autofunction:: set_container_query_text
+
 .. autofunction:: set_effective_property_value_for_node
 
 .. autofunction:: set_keyframe_key
 
+.. autofunction:: set_local_fonts_enabled
+
 .. autofunction:: set_media_text
 
+.. autofunction:: set_property_rule_property_name
+
 .. autofunction:: set_rule_selector
+
+.. autofunction:: set_scope_text
 
 .. autofunction:: set_style_sheet_text
 
 .. autofunction:: set_style_texts
 
+.. autofunction:: set_supports_text
+
 .. autofunction:: start_rule_usage_tracking
 
 .. autofunction:: stop_rule_usage_tracking
 
+.. autofunction:: take_computed_style_updates
+
 .. autofunction:: take_coverage_delta
+
+.. autofunction:: track_computed_style_updates
 
 Events
 ------

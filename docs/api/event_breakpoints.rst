@@ -1,11 +1,13 @@
-HeadlessExperimental
-====================
+EventBreakpoints
+================
 
-This domain provides experimental commands only supported in headless mode.
+EventBreakpoints permits setting JavaScript breakpoints on operations and events
+occurring in native code invoked from JavaScript. Once breakpoint is hit, it is
+reported through Debugger domain, similarly to regular breakpoints being hit.
 
 *This CDP domain is experimental.*
 
-.. module:: cdp.headless_experimental
+.. module:: cdp.event_breakpoints
 
 * Types_
 * Commands_
@@ -14,15 +16,7 @@ This domain provides experimental commands only supported in headless mode.
 Types
 -----
 
-Generally, you do not need to instantiate CDP types
-yourself. Instead, the API creates objects for you as return
-values from commands, and then you can use those objects as
-arguments to other commands.
-
-.. autoclass:: ScreenshotParams
-      :members:
-      :undoc-members:
-      :exclude-members: from_json, to_json
+*There are no types in this module.*
 
 Commands
 --------
@@ -36,11 +30,11 @@ commands, and ``z`` is the return type you should pay attention
 to. For more information, see
 :ref:`Getting Started: Commands <getting-started-commands>`.
 
-.. autofunction:: begin_frame
-
 .. autofunction:: disable
 
-.. autofunction:: enable
+.. autofunction:: remove_instrumentation_breakpoint
+
+.. autofunction:: set_instrumentation_breakpoint
 
 Events
 ------

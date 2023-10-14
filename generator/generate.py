@@ -589,7 +589,7 @@ class CdpCommand:
         code = ''
 
         if self.deprecated:
-            code += f'@deprecated(version="{current_version}")\n'
+            code += f'@deprecated(current_version="{current_version}")\n'
 
         code += f'def {self.py_name}('
         ret = f') -> {ret_type}:\n'
@@ -704,7 +704,7 @@ class CdpEvent:
             class {self.py_name}:''')
 
         if self.deprecated:
-            code = f'@deprecated(version="{current_version}")\n' + code
+            code = f'@deprecated(current_version="{current_version}")\n' + code
 
         code += '\n'
         desc = ''
@@ -831,7 +831,7 @@ class CdpDomain:
         code = '\n'.join(f'from . import {d}' for d in sorted(dependencies))
 
         if needs_deprecation:
-            code += '\nfrom deprecated.sphinx import deprecated # type: ignore'
+            code += '\nfrom  deprecation import deprecated'
 
         return code
 

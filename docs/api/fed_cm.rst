@@ -1,11 +1,11 @@
-HeadlessExperimental
-====================
+FedCm
+=====
 
-This domain provides experimental commands only supported in headless mode.
+This domain allows interacting with the FedCM dialog.
 
 *This CDP domain is experimental.*
 
-.. module:: cdp.headless_experimental
+.. module:: cdp.fed_cm
 
 * Types_
 * Commands_
@@ -19,7 +19,17 @@ yourself. Instead, the API creates objects for you as return
 values from commands, and then you can use those objects as
 arguments to other commands.
 
-.. autoclass:: ScreenshotParams
+.. autoclass:: LoginState
+      :members:
+      :undoc-members:
+      :exclude-members: from_json, to_json
+
+.. autoclass:: DialogType
+      :members:
+      :undoc-members:
+      :exclude-members: from_json, to_json
+
+.. autoclass:: Account
       :members:
       :undoc-members:
       :exclude-members: from_json, to_json
@@ -36,13 +46,26 @@ commands, and ``z`` is the return type you should pay attention
 to. For more information, see
 :ref:`Getting Started: Commands <getting-started-commands>`.
 
-.. autofunction:: begin_frame
+.. autofunction:: confirm_idp_login
 
 .. autofunction:: disable
 
+.. autofunction:: dismiss_dialog
+
 .. autofunction:: enable
+
+.. autofunction:: reset_cooldown
+
+.. autofunction:: select_account
 
 Events
 ------
 
-*There are no events in this module.*
+Generally, you do not need to instantiate CDP events
+yourself. Instead, the API creates events for you and then
+you use the event's attributes.
+
+.. autoclass:: DialogShown
+      :members:
+      :undoc-members:
+      :exclude-members: from_json, to_json

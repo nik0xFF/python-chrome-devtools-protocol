@@ -1,9 +1,11 @@
-ServiceWorker
-=============
+Autofill
+========
+
+Defines commands and events for Autofill.
 
 *This CDP domain is experimental.*
 
-.. module:: cdp.service_worker
+.. module:: cdp.autofill
 
 * Types_
 * Commands_
@@ -17,32 +19,37 @@ yourself. Instead, the API creates objects for you as return
 values from commands, and then you can use those objects as
 arguments to other commands.
 
-.. autoclass:: RegistrationID
+.. autoclass:: CreditCard
       :members:
       :undoc-members:
       :exclude-members: from_json, to_json
 
-.. autoclass:: ServiceWorkerRegistration
+.. autoclass:: AddressField
       :members:
       :undoc-members:
       :exclude-members: from_json, to_json
 
-.. autoclass:: ServiceWorkerVersionRunningStatus
+.. autoclass:: AddressFields
       :members:
       :undoc-members:
       :exclude-members: from_json, to_json
 
-.. autoclass:: ServiceWorkerVersionStatus
+.. autoclass:: Address
       :members:
       :undoc-members:
       :exclude-members: from_json, to_json
 
-.. autoclass:: ServiceWorkerVersion
+.. autoclass:: AddressUI
       :members:
       :undoc-members:
       :exclude-members: from_json, to_json
 
-.. autoclass:: ServiceWorkerErrorMessage
+.. autoclass:: FillingStrategy
+      :members:
+      :undoc-members:
+      :exclude-members: from_json, to_json
+
+.. autoclass:: FilledField
       :members:
       :undoc-members:
       :exclude-members: from_json, to_json
@@ -59,31 +66,13 @@ commands, and ``z`` is the return type you should pay attention
 to. For more information, see
 :ref:`Getting Started: Commands <getting-started-commands>`.
 
-.. autofunction:: deliver_push_message
-
 .. autofunction:: disable
-
-.. autofunction:: dispatch_periodic_sync_event
-
-.. autofunction:: dispatch_sync_event
 
 .. autofunction:: enable
 
-.. autofunction:: inspect_worker
+.. autofunction:: set_addresses
 
-.. autofunction:: set_force_update_on_page_load
-
-.. autofunction:: skip_waiting
-
-.. autofunction:: start_worker
-
-.. autofunction:: stop_all_workers
-
-.. autofunction:: stop_worker
-
-.. autofunction:: unregister
-
-.. autofunction:: update_registration
+.. autofunction:: trigger
 
 Events
 ------
@@ -92,17 +81,7 @@ Generally, you do not need to instantiate CDP events
 yourself. Instead, the API creates events for you and then
 you use the event's attributes.
 
-.. autoclass:: WorkerErrorReported
-      :members:
-      :undoc-members:
-      :exclude-members: from_json, to_json
-
-.. autoclass:: WorkerRegistrationUpdated
-      :members:
-      :undoc-members:
-      :exclude-members: from_json, to_json
-
-.. autoclass:: WorkerVersionUpdated
+.. autoclass:: AddressFormFilled
       :members:
       :undoc-members:
       :exclude-members: from_json, to_json
