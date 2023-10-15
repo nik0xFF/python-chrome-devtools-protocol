@@ -12,7 +12,7 @@ import enum
 import typing
 
 from . import runtime
-from deprecation import deprecated
+from  deprecation import deprecated
 
 
 class BreakpointId(str):
@@ -1247,7 +1247,7 @@ class ScriptFailedToParse:
     #: If the scriptLanguage is WebAssembly, the code section offset in the module.
     code_offset: typing.Optional[int]
     #: The language of the script.
-    script_language: typing.Optional[debugger.ScriptLanguage]
+    script_language: typing.Optional[ScriptLanguage]
     #: The name the embedder supplied for this script.
     embedder_name: typing.Optional[str]
 
@@ -1269,7 +1269,7 @@ class ScriptFailedToParse:
             length=int(json['length']) if 'length' in json else None,
             stack_trace=runtime.StackTrace.from_json(json['stackTrace']) if 'stackTrace' in json else None,
             code_offset=int(json['codeOffset']) if 'codeOffset' in json else None,
-            script_language=debugger.ScriptLanguage.from_json(json['scriptLanguage']) if 'scriptLanguage' in json else None,
+            script_language=ScriptLanguage.from_json(json['scriptLanguage']) if 'scriptLanguage' in json else None,
             embedder_name=str(json['embedderName']) if 'embedderName' in json else None
         )
 
@@ -1314,9 +1314,9 @@ class ScriptParsed:
     #: If the scriptLanguage is WebAssembly, the code section offset in the module.
     code_offset: typing.Optional[int]
     #: The language of the script.
-    script_language: typing.Optional[debugger.ScriptLanguage]
+    script_language: typing.Optional[ScriptLanguage]
     #: If the scriptLanguage is WebASsembly, the source of debug symbols for the module.
-    debug_symbols: typing.Optional[debugger.DebugSymbols]
+    debug_symbols: typing.Optional[DebugSymbols]
     #: The name the embedder supplied for this script.
     embedder_name: typing.Optional[str]
 
@@ -1339,7 +1339,7 @@ class ScriptParsed:
             length=int(json['length']) if 'length' in json else None,
             stack_trace=runtime.StackTrace.from_json(json['stackTrace']) if 'stackTrace' in json else None,
             code_offset=int(json['codeOffset']) if 'codeOffset' in json else None,
-            script_language=debugger.ScriptLanguage.from_json(json['scriptLanguage']) if 'scriptLanguage' in json else None,
-            debug_symbols=debugger.DebugSymbols.from_json(json['debugSymbols']) if 'debugSymbols' in json else None,
+            script_language=ScriptLanguage.from_json(json['scriptLanguage']) if 'scriptLanguage' in json else None,
+            debug_symbols=DebugSymbols.from_json(json['debugSymbols']) if 'debugSymbols' in json else None,
             embedder_name=str(json['embedderName']) if 'embedderName' in json else None
         )

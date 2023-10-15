@@ -201,8 +201,9 @@ class CdpProperty:
         return ann
 
     @classmethod
-    def from_json(cls, property) -> 'CdpProperty':
+    def from_json(cls, property, domain) -> 'CdpProperty':
         ''' Instantiate a CDP property from a JSON object. '''
+
         return cls(
             property['name'],
             property.get('description'),
@@ -279,9 +280,10 @@ class CdpType:
     items: typing.Optional[CdpItems]
     enum: typing.List[str]
     properties: typing.List[CdpProperty]
+    domain: str
 
     @classmethod
-    def from_json(cls, type_) -> 'CdpType':
+    def from_json(cls, type_, domain: str) -> 'CdpType':
         ''' Instantiate a CDP type from a JSON object. '''
         return cls(
             type_['id'],
@@ -289,7 +291,8 @@ class CdpType:
             type_['type'],
             CdpItems.from_json(type_['items']) if 'items' in type_ else None,
             type_.get('enum'),
-            [CdpProperty.from_json(p) for p in type_.get('properties', list())],
+            [CdpProperty.from_json(p, domain) for p in type_.get('properties', list())],
+            domain
         )
 
     def generate_code(self) -> str:
@@ -389,6 +392,10 @@ class CdpType:
         # properties come after required properties, which is required to make
         # the dataclass constructor work.
         props = list(self.properties)
+        for p in props:
+            if p.ref and '.'.join(p.ref.split('.')[:-1]) == self.domain:
+                p.ref = p.ref.replace(f'{self.domain}.', '')
+
         props.sort(key=operator.attrgetter('optional'))
         code += '\n\n'.join(indent(p.generate_decl(), 4) for p in props)
         code += '\n\n'
@@ -561,6 +568,7 @@ class CdpCommand:
     def from_json(cls, command, domain) -> 'CdpCommand':
         ''' Instantiate a CDP command from a JSON object. '''
         parameters = command.get('parameters', list())
+        parameters = sorted(parameters, key=lambda p: p.get('optional', False))
         returns = command.get('returns', list())
 
         return cls(
@@ -568,8 +576,8 @@ class CdpCommand:
             command.get('description'),
             command.get('experimental', False),
             command.get('deprecated', False),
-            [typing.cast(CdpParameter, CdpParameter.from_json(p)) for p in parameters],
-            [typing.cast(CdpReturn, CdpReturn.from_json(r)) for r in returns],
+            [typing.cast(CdpParameter, CdpParameter.from_json(p, domain)) for p in parameters],
+            [typing.cast(CdpReturn, CdpReturn.from_json(r, domain)) for r in returns],
             domain,
         )
 
@@ -690,13 +698,17 @@ class CdpEvent:
             json.get('description'),
             json.get('deprecated', False),
             json.get('experimental', False),
-            [typing.cast(CdpParameter, CdpParameter.from_json(p))
+            [typing.cast(CdpParameter, CdpParameter.from_json(p, domain))
                 for p in json.get('parameters', list())],
             domain
         )
 
     def generate_code(self) -> str:
         ''' Generate code for a CDP event. '''
+
+        for p in self.parameters:
+            if p.ref and '.'.join(p.ref.split('.')[:-1]) == self.domain:
+                p.ref = p.ref.replace(f'{self.domain}.', '')
         global current_version
         code = dedent(f'''\
             @event_class('{self.domain}.{self.name}')
@@ -726,6 +738,7 @@ class CdpEvent:
                 return cls(
         ''')
         code += indent(def_from_json, 4)
+
         from_json = ',\n'.join(p.generate_from_json(dict_='json')
             for p in self.parameters)
         code += indent(from_json, 12)
@@ -773,7 +786,7 @@ class CdpDomain:
             domain.get('description'),
             domain.get('experimental', False),
             domain.get('dependencies', list()),
-            [CdpType.from_json(type) for type in types],
+            [CdpType.from_json(type, domain_name) for type in types],
             [CdpCommand.from_json(command, domain_name)
                 for command in commands],
             [CdpEvent.from_json(event, domain_name) for event in events]

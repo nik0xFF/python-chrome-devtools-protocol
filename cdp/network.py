@@ -2092,7 +2092,7 @@ class ReportingApiReport:
     type_: str
 
     #: When the report was generated.
-    timestamp: network.TimeSinceEpoch
+    timestamp: TimeSinceEpoch
 
     #: How many uploads deep the related request was.
     depth: int
@@ -2124,7 +2124,7 @@ class ReportingApiReport:
             initiator_url=str(json['initiatorUrl']),
             destination=str(json['destination']),
             type_=str(json['type']),
-            timestamp=network.TimeSinceEpoch.from_json(json['timestamp']),
+            timestamp=TimeSinceEpoch.from_json(json['timestamp']),
             depth=int(json['depth']),
             completed_attempts=int(json['completedAttempts']),
             body=dict(json['body']),
@@ -2172,7 +2172,7 @@ class LoadNetworkResourcePageResult:
     stream: typing.Optional[io.StreamHandle] = None
 
     #: Response headers.
-    headers: typing.Optional[network.Headers] = None
+    headers: typing.Optional[Headers] = None
 
     def to_json(self) -> T_JSON_DICT:
         json: T_JSON_DICT = dict()
@@ -2197,7 +2197,7 @@ class LoadNetworkResourcePageResult:
             net_error_name=str(json['netErrorName']) if 'netErrorName' in json else None,
             http_status_code=float(json['httpStatusCode']) if 'httpStatusCode' in json else None,
             stream=io.StreamHandle.from_json(json['stream']) if 'stream' in json else None,
-            headers=network.Headers.from_json(json['headers']) if 'headers' in json else None,
+            headers=Headers.from_json(json['headers']) if 'headers' in json else None,
         )
 
 
@@ -2954,23 +2954,25 @@ def enable_reporting_api(
 
 
 def load_network_resource(
-        frame_id: typing.Optional[page.FrameId] = None,
+        url: str,
+        options: LoadNetworkResourceOptions,
+        frame_id: typing.Optional[page.FrameId] = None
     ) -> typing.Generator[T_JSON_DICT,T_JSON_DICT,LoadNetworkResourcePageResult]:
     '''
     Fetches the resource and returns the content.
 
     **EXPERIMENTAL**
 
-    :param frame_id: *(Optional)* Frame id to get the resource for. Mandatory for frame targets, and should be omitted for worker targets.
     :param url: URL of the resource to get content for.
     :param options: Options for the request.
+    :param frame_id: *(Optional)* Frame id to get the resource for. Mandatory for frame targets, and should be omitted for worker targets.
     :returns: 
     '''
     params: T_JSON_DICT = dict()
-    if frame_id is not None:
-        params['frameId'] = frame_id.to_json()
     params['url'] = url
     params['options'] = options.to_json()
+    if frame_id is not None:
+        params['frameId'] = frame_id.to_json()
     cmd_dict: T_JSON_DICT = {
         'method': 'Network.loadNetworkResource',
         'params': params,

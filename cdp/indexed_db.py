@@ -269,21 +269,21 @@ def clear_object_store(
     '''
     Clears all entries from an object store.
 
+    :param database_name: Database name.
+    :param object_store_name: Object store name.
     :param security_origin: *(Optional)* At least and at most one of securityOrigin, storageKey, or storageBucket must be specified. Security origin.
     :param storage_key: *(Optional)* Storage key.
     :param storage_bucket: *(Optional)* Storage bucket. If not specified, it uses the default bucket.
-    :param database_name: Database name.
-    :param object_store_name: Object store name.
     '''
     params: T_JSON_DICT = dict()
+    params['databaseName'] = database_name
+    params['objectStoreName'] = object_store_name
     if security_origin is not None:
         params['securityOrigin'] = security_origin
     if storage_key is not None:
         params['storageKey'] = storage_key
     if storage_bucket is not None:
         params['storageBucket'] = storage_bucket.to_json()
-    params['databaseName'] = database_name
-    params['objectStoreName'] = object_store_name
     cmd_dict: T_JSON_DICT = {
         'method': 'IndexedDB.clearObjectStore',
         'params': params,
@@ -295,24 +295,24 @@ def delete_database(
         database_name: str,
         security_origin: typing.Optional[str] = None,
         storage_key: typing.Optional[str] = None,
-        storage_bucket: typing.Optional[storage.StorageBucket] = None,
+        storage_bucket: typing.Optional[storage.StorageBucket] = None
     ) -> typing.Generator[T_JSON_DICT,T_JSON_DICT,None]:
     '''
     Deletes a database.
 
+    :param database_name: Database name.
     :param security_origin: *(Optional)* At least and at most one of securityOrigin, storageKey, or storageBucket must be specified. Security origin.
     :param storage_key: *(Optional)* Storage key.
     :param storage_bucket: *(Optional)* Storage bucket. If not specified, it uses the default bucket.
-    :param database_name: Database name.
     '''
     params: T_JSON_DICT = dict()
+    params['databaseName'] = database_name
     if security_origin is not None:
         params['securityOrigin'] = security_origin
     if storage_key is not None:
         params['storageKey'] = storage_key
     if storage_bucket is not None:
         params['storageBucket'] = storage_bucket.to_json()
-    params['databaseName'] = database_name
     cmd_dict: T_JSON_DICT = {
         'method': 'IndexedDB.deleteDatabase',
         'params': params,
@@ -331,23 +331,23 @@ def delete_object_store_entries(
     '''
     Delete a range of entries from an object store
 
-    :param security_origin: *(Optional)* At least and at most one of securityOrigin, storageKey, or storageBucket must be specified. Security origin.
-    :param storage_key: *(Optional)* Storage key.
-    :param storage_bucket: *(Optional)* Storage bucket. If not specified, it uses the default bucket.
     :param database_name:
     :param object_store_name:
     :param key_range: Range of entry keys to delete
+    :param security_origin: *(Optional)* At least and at most one of securityOrigin, storageKey, or storageBucket must be specified. Security origin.
+    :param storage_key: *(Optional)* Storage key.
+    :param storage_bucket: *(Optional)* Storage bucket. If not specified, it uses the default bucket.
     '''
     params: T_JSON_DICT = dict()
+    params['databaseName'] = database_name
+    params['objectStoreName'] = object_store_name
+    params['keyRange'] = key_range.to_json()
     if security_origin is not None:
         params['securityOrigin'] = security_origin
     if storage_key is not None:
         params['storageKey'] = storage_key
     if storage_bucket is not None:
         params['storageBucket'] = storage_bucket.to_json()
-    params['databaseName'] = database_name
-    params['objectStoreName'] = object_store_name
-    params['keyRange'] = key_range.to_json()
     cmd_dict: T_JSON_DICT = {
         'method': 'IndexedDB.deleteObjectStoreEntries',
         'params': params,
@@ -389,14 +389,14 @@ def request_data(
     '''
     Requests data from object store or index.
 
-    :param security_origin: *(Optional)* At least and at most one of securityOrigin, storageKey, or storageBucket must be specified. Security origin.
-    :param storage_key: *(Optional)* Storage key.
-    :param storage_bucket: *(Optional)* Storage bucket. If not specified, it uses the default bucket.
     :param database_name: Database name.
     :param object_store_name: Object store name.
     :param index_name: Index name, empty string for object store data requests.
     :param skip_count: Number of records to skip.
     :param page_size: Number of records to fetch.
+    :param security_origin: *(Optional)* At least and at most one of securityOrigin, storageKey, or storageBucket must be specified. Security origin.
+    :param storage_key: *(Optional)* Storage key.
+    :param storage_bucket: *(Optional)* Storage bucket. If not specified, it uses the default bucket.
     :param key_range: *(Optional)* Key range.
     :returns: A tuple with the following items:
 
@@ -404,17 +404,17 @@ def request_data(
         1. **hasMore** - If true, there are more entries to fetch in the given range.
     '''
     params: T_JSON_DICT = dict()
+    params['databaseName'] = database_name
+    params['objectStoreName'] = object_store_name
+    params['indexName'] = index_name
+    params['skipCount'] = skip_count
+    params['pageSize'] = page_size
     if security_origin is not None:
         params['securityOrigin'] = security_origin
     if storage_key is not None:
         params['storageKey'] = storage_key
     if storage_bucket is not None:
         params['storageBucket'] = storage_bucket.to_json()
-    params['databaseName'] = database_name
-    params['objectStoreName'] = object_store_name
-    params['indexName'] = index_name
-    params['skipCount'] = skip_count
-    params['pageSize'] = page_size
     if key_range is not None:
         params['keyRange'] = key_range.to_json()
     cmd_dict: T_JSON_DICT = {
@@ -433,30 +433,30 @@ def get_metadata(
         object_store_name: str,
         security_origin: typing.Optional[str] = None,
         storage_key: typing.Optional[str] = None,
-        storage_bucket: typing.Optional[storage.StorageBucket] = None,
+        storage_bucket: typing.Optional[storage.StorageBucket] = None
     ) -> typing.Generator[T_JSON_DICT,T_JSON_DICT,typing.Tuple[float, float]]:
     '''
     Gets metadata of an object store.
 
+    :param database_name: Database name.
+    :param object_store_name: Object store name.
     :param security_origin: *(Optional)* At least and at most one of securityOrigin, storageKey, or storageBucket must be specified. Security origin.
     :param storage_key: *(Optional)* Storage key.
     :param storage_bucket: *(Optional)* Storage bucket. If not specified, it uses the default bucket.
-    :param database_name: Database name.
-    :param object_store_name: Object store name.
     :returns: A tuple with the following items:
 
         0. **entriesCount** - the entries count
         1. **keyGeneratorValue** - the current value of key generator, to become the next inserted key into the object store. Valid if objectStore.autoIncrement is true.
     '''
     params: T_JSON_DICT = dict()
+    params['databaseName'] = database_name
+    params['objectStoreName'] = object_store_name
     if security_origin is not None:
         params['securityOrigin'] = security_origin
     if storage_key is not None:
         params['storageKey'] = storage_key
     if storage_bucket is not None:
         params['storageBucket'] = storage_bucket.to_json()
-    params['databaseName'] = database_name
-    params['objectStoreName'] = object_store_name
     cmd_dict: T_JSON_DICT = {
         'method': 'IndexedDB.getMetadata',
         'params': params,
@@ -477,20 +477,20 @@ def request_database(
     '''
     Requests database with given name in given frame.
 
+    :param database_name: Database name.
     :param security_origin: *(Optional)* At least and at most one of securityOrigin, storageKey, or storageBucket must be specified. Security origin.
     :param storage_key: *(Optional)* Storage key.
     :param storage_bucket: *(Optional)* Storage bucket. If not specified, it uses the default bucket.
-    :param database_name: Database name.
     :returns: Database with an array of object stores.
     '''
     params: T_JSON_DICT = dict()
+    params['databaseName'] = database_name
     if security_origin is not None:
         params['securityOrigin'] = security_origin
     if storage_key is not None:
         params['storageKey'] = storage_key
     if storage_bucket is not None:
         params['storageBucket'] = storage_bucket.to_json()
-    params['databaseName'] = database_name
     cmd_dict: T_JSON_DICT = {
         'method': 'IndexedDB.requestDatabase',
         'params': params,
