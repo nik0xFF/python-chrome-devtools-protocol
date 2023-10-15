@@ -71,6 +71,7 @@ def escape_backticks(docstr: str) -> str:
 
     # Sometimes pipes are used where backticks should have been used.
     docstr = docstr.replace('|', '`')
+    docstr = docstr.replace('\x00', '')
     return BACKTICK_RE.sub(replace_one, docstr)
 
 
